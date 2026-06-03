@@ -1,29 +1,30 @@
-# HCMUS-DSA-Project-Sorting-Benchmark
+# Báo cáo đồ án 1: Sorting benchmark
 
-Báo cáo đồ án 1: Sorting benchmark
-Thông tin chung
+## Thông tin chung
 Tên môn học: Cấu trúc dữ liệu và Giải thuật
 Thời gian: Học kỳ II, năm học 2025 - 2026
-Sinh viên: Nguyễn Lê Chí Tường - MSSV: 25120465
-Lớp: 25CTT6 - Khoa CNTT - HCMUS
+Nhóm sinh viên thực hiện (Lớp 25CTT6):
+- Nguyễn Lê Chí Tường (MSSV: 25120465)
+- Đoàn Hoàng Việt (MSSV: 25120469)
+- Lê Dương Hồng Quân (MSSV: 25120424)
 
-Benchmark 1
-Ở lần chạy đầu tiên, tôi chọn Heap Sort tự cài đặt cho cả 3 bài.
+## Benchmark 1: Lựa chọn thuật toán
+Ở lần chạy đầu tiên, nhóm quyết định dùng Quick Sort cho bài A và B, còn bài C thì dùng Merge Sort. 
 
-Lý do khá thực dụng: đồ án này chấm điểm dựa trên test case do các bạn khác viết để triệt hạ nhau. Nếu dùng Quick Sort, chỉ cần một test case xấu (ví dụ mảng xếp ngược hoặc toàn số trùng nhau) là thuật toán kẹt ở O(N^2) ngay. Heap Sort an toàn hơn. Dù dữ liệu có tệ cỡ nào thì nó vẫn giải quyết gọn trong O(N log N). Ngoài ra, thuật toán này không cần xin thêm RAM của hệ thống, giúp tôi loại được nguy cơ bị sập do quá giới hạn bộ nhớ.
+Với dữ liệu số nguyên và chuỗi thông thường, Quick Sort là lựa chọn tốt vì nó không tốn thêm bộ nhớ (in-place) và tận dụng bộ đệm (cache) cực kỳ hiệu quả. Thời gian chạy trung bình O(N log N) là đủ để vượt qua các test cơ bản. Tuy nhiên, Quick Sort có một điểm yếu chết người là dễ bị trượt xuống O(N^2) nếu gặp dữ liệu xấu. Bài C có thời gian giới hạn gắt hơn và phải so sánh qua hai nấc (chiều dài và từ điển), nên nhóm dùng Merge Sort để đảm bảo an toàn. Merge Sort lúc nào cũng giữ vững tốc độ O(N log N) bất chấp việc mảng có bị xếp ngược hay chứa nhiều phần tử trùng lặp.
 
-Cách sinh test case (test_gen.cpp)
-Thay vì random dữ liệu bình thường, tôi nhắm vào các lỗi phổ biến mà sinh viên hay mắc phải khi tự code.
+## Cách sinh test case (test_gen.cpp)
+Đoạn code `test_gen.cpp` được viết theo chuẩn C++23. Mục tiêu của bộ test này không phải là sinh dữ liệu ngẫu nhiên, mà là đánh sập các thuật toán Quick Sort dùng chốt (pivot) cố định và các hàm so sánh tự chế của những nhóm khác trong lớp.
 
-Với mảng số nguyên, tôi tạo một mảng xếp giảm dần để ép các bản cài đặt Quick Sort cơ bản chạy lố thời gian. Tôi cũng làm một test lặp lại đúng 2 con số để kiểm tra xem thuật toán phân hoạch mảng có bị lệch không. Hiểm nhất là test đan xen số lớn nhất và nhỏ nhất của kiểu int 32-bit. Nhiều người quen tay viết hàm so sánh bằng phép trừ (a - b). Khi gặp test này, máy sẽ bị tràn số và chấm sai kết quả.
+Với bài số nguyên, mình tạo một mảng xếp giảm dần để ép các cài đặt Quick Sort lặp đủ N tầng đệ quy, đẩy thời gian chạy lên tối đa. Mình cũng thiết kế một test chỉ đan xen đúng hai số 1 và 2 để làm rối loạn các hàm chia mảng (partition). Bẫy hiểm nhất là test thứ 5, chỉ in ra số lớn nhất (2147483647) và nhỏ nhất (-2147483648) của kiểu int 32-bit. Rất nhiều người quen tay viết hàm so sánh bằng phép trừ a trừ b. Khi gặp test này, máy tính sẽ bị tràn bộ nhớ và cho ra kết quả sai hoàn toàn.
 
-Với dữ liệu chuỗi, điểm yếu lớn nhất là chi phí đi so sánh từng chữ cái. Tôi sinh ra các chuỗi dài 100 ký tự, trong đó 99 ký tự đầu giống hệt nhau. Thuật toán của các bài nộp khác sẽ phải lặp qua 99 ký tự đó nhiều lần vô ích chỉ để đối chiếu đúng một ký tự cuối cùng. Ở bài C, tôi gài thêm test có chuỗi ngắn nằm ngay đầu chuỗi dài để làm khó các hàm so sánh tự chế.
+Với mảng chuỗi, phép so sánh từng chữ cái là nơi dễ bị nghẽn nhất. Mình sinh ra các chuỗi dài 100 ký tự có 99 chữ cái đầu giống hệt nhau. Máy tính của đối phương sẽ phải lặp qua 99 chữ cái đó vô ích chỉ để thấy sự khác biệt ở ký tự cuối cùng. Riêng ở bài C, mình lồng ghép một chuỗi ngắn làm tiền tố cho một chuỗi dài để ép thuật toán phải duyệt hết độ dài chuỗi ngắn mới phát hiện ra điểm khác biệt.
 
-Benchmark 2
-Sang lần chạy hai, tôi đổi chiến thuật để bào thời gian chạy xuống mức thấp nhất.
+## Benchmark 2: Tối ưu thuật toán
+Sang lần chạy hai, nhóm bỏ các thư viện có sẵn để tự tối ưu sâu hơn nhằm bào thời gian chạy xuống mức thấp nhất.
 
-Ở bài A, tôi chuyển sang Radix Sort cơ số 256. Thuật toán này không dùng phép so sánh mà xếp số theo từng byte nên tốc độ lướt qua mảng nhanh hơn hẳn. Vì Radix Sort thao tác trên bit nên nó không chạy được với số âm. Để lách luật, tôi cộng thêm 2^31 vào đầu vào để chuyển hết về số dương, sắp xếp xong thì trừ đi để trả về dữ liệu gốc.
+Ở bài số nguyên (Bài A), nhóm chuyển sang Radix Sort. Thuật toán này không dùng phép so sánh mà chia số theo từng byte để xếp, giúp tốc độ lướt qua mảng nhanh hơn O(N log N) rất nhiều. Vì Radix Sort thao tác trực tiếp trên bit nên nó không hiểu số âm. Để lách luật, nhóm cộng thêm 2^31 vào toàn bộ đầu vào để chuyển chúng thành số dương, sắp xếp xong thì trừ đi lượng đó để trả về dữ liệu gốc.
 
-Sang bài B, các chuỗi dài 100 ký tự bắt đầu gây áp lực lên bộ nhớ. Nếu gọi hàm swap đổi chỗ liên tục, chương trình sẽ rất chậm. Tôi quyết định giữ các chuỗi nằm im một chỗ, tạo thêm một mảng phụ lưu index của chúng, rồi đem Merge Sort đi sắp xếp cái mảng index này. Cách này không bắt máy tính phải chép qua chép lại dữ liệu chuỗi.
+Sang bài chuỗi từ điển (Bài B), việc hoán vị các chuỗi dài bằng Quick Sort quá tốn tài nguyên. Nhóm dùng MSD Radix Sort (Sắp xếp theo cơ số từ trái sang phải). Thay vì đem hai chuỗi ra so sánh, thuật toán sẽ chia các chuỗi vào 26 nhóm dựa trên chữ cái đầu tiên, sau đó đệ quy chia tiếp cho chữ cái thứ hai. Kỹ thuật này triệt tiêu hoàn toàn thao tác gọi hàm so sánh chuỗi phức tạp.
 
-Riêng bài C có giới hạn 1 giây rất gắt. Nếu cứ liên tục gọi hàm đếm chiều dài chuỗi thì chắc chắn sẽ bị quá giờ. Tôi dùng kỹ thuật chia rổ (Bucket Sort). Tôi tạo sẵn 205 mảng rỗng; đọc được chuỗi dài bao nhiêu thì thả ngay vào rổ đó. Cách này giúp tôi gom nhóm chiều dài xong xuôi mà không cần tốn một phép so sánh nào. Việc còn lại chỉ là chạy Merge Sort nội bộ cho từng rổ. Để tránh việc đệ quy xin RAM liên tục làm chậm máy, tôi dọn sẵn một mảng tạm dùng chung và cấp phát đúng một lần từ lúc chạy main.
+Riêng bài C, nhóm lôi kỹ thuật chia rổ (Bucket Sort) ra xài. Cụ thể, mình tạo sẵn các mảng rỗng tương ứng với chiều dài từ 10 đến 100. Đọc được chuỗi dài bao nhiêu thì thả ngay vào rổ bấy nhiêu. Bước này giúp gom nhóm chiều dài xong xuôi ngay từ lúc đọc input mà không tốn một phép so sánh nào. Sau đó, nhóm chỉ cần chạy Merge Sort nội bộ cho từng rổ để sắp xếp theo thứ tự từ điển là xong.
