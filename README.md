@@ -26,12 +26,11 @@ Bucket Sort kết hợp Radix Sort LSD
 Các chuỗi được nhóm theo độ dài vào các bucket riêng (vector<vector<int>> byLen), sau đó trong mỗi bucket, vì tất cả chuỗi có cùng độ dài L, em chạy Radix Sort LSD duyệt ngược từ ký tự cuối về đầu. Lợi thế ở đây là biết trước độ dài nên hoàn toàn bỏ được các lệnh kiểm tra ký tự \0 trong vòng lặp phân phối, không còn nhánh if/else thừa, tốc độ nhờ vậy khá ổn.
 
 ## Cách sinh test case
-Chương trình test_gen.cpp tuân thủ chuẩn C++23 và nhận tham số trực tiếp từ dòng lệnh (ví dụ: test_gen.exe int 3). Nhóm loại bỏ hàm rand() của C vì nó dễ bị lệch dư và chỉ sinh số nhỏ. Thay vào đó, tụi mình xài thuật toán Mersenne Twister (mt19937) để tạo ra tập dữ liệu phân phối đều.
+Mục tiêu của bộ test này không phải là sinh dữ liệu ngẫu nhiên, mà là đánh sập các thuật toán Quick Sort dùng chốt pivot cố định và các hàm so sánh tự chế của những nhóm khác trong lớp.
 
-Mục tiêu của bộ test là đánh sập QuickSort và các hàm so sánh chuỗi tự chế.
-Ở bài số nguyên, test 2 sinh mảng giảm dần, test 3 sinh mảng toàn số 1 và 2 đan xen, test 4 là mảng 100.000 số giống nhau hoàn toàn. Nếu các bài nộp khác dùng QuickSort với chốt (pivot) cố định ở đầu hoặc cuối mảng, cây đệ quy sẽ bị lệch hoàn toàn sang một bên. Thuật toán sẽ thoái hóa thành O(N^2), gây tràn stack hoặc lố thời gian. Test 5 đan xen số lớn nhất (2147483647) và nhỏ nhất (-2147483648) của kiểu 32-bit. Ai quen tay viết hàm so sánh bằng phép trừ sẽ bị tràn số và in ra kết quả sai.
+Với bài số nguyên, nhóm tạo một mảng xếp giảm dần để ép các cài đặt Quick Sort lặp đủ N tầng đệ quy, đẩy thời gian chạy lên tối đa. Nhóm cũng thiết kế một test chỉ đan xen đúng hai số 1 và 2 để làm rối loạn các hàm chia mảng partition. Bẫy hiểm nhất là test thứ 5, chỉ in ra số lớn nhất (2147483647) và nhỏ nhất (-2147483648) của kiểu int 32-bit. Rất nhiều người quen tay viết hàm so sánh bằng phép trừ a trừ b. Khi gặp test này, máy tính sẽ bị tràn bộ nhớ và cho ra kết quả sai hoàn toàn.
 
-Ở bài chuỗi, nút thắt luôn nằm ở chi phí duyệt chữ cái. Test 2 tạo 100.000 chuỗi dài 100 ký tự, trong đó 99 ký tự đầu giống hệt nhau. Code dùng std::sort hoặc strcmp bình thường sẽ phải duyệt qua 99 ký tự này một cách lãng phí ở mỗi phép so sánh. Riêng bài C, test 4 tung vào các chuỗi có chiều dài lộn xộn, kết hợp với các chuỗi trùng tiền tố. Mục đích của test này là gây trượt bộ đệm (cache miss) nếu đối thủ cấp phát dữ liệu chuỗi rời rạc trên heap.
+Với mảng chuỗi, phép so sánh từng chữ cái là nơi dễ bị nghẽn nhất. Nhóm sinh ra các chuỗi dài 100 ký tự có 99 chữ cái đầu giống hệt nhau. Máy tính của các nhóm sẽ phải lặp qua 99 chữ cái đó vô ích chỉ để thấy sự khác biệt ở ký tự cuối cùng. Riêng ở bài C, nhóm lồng ghép một chuỗi ngắn làm tiền tố cho một chuỗi dài để ép thuật toán phải duyệt hết độ dài chuỗi ngắn mới phát hiện ra điểm khác biệt.
 
 ## Benchmark 2
 Bài A:
