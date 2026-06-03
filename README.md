@@ -1,13 +1,13 @@
 # Báo cáo đồ án 1: Sorting benchmark
 
 ## Thông tin chung
-Tên môn học: Cấu trúc dữ liệu và giải thuật
-Thời gian: Học kỳ II, năm học 2025 - 2026
-Đơn vị: Khoa Công nghệ Thông tin - Trường Đại học Khoa học Tự nhiên (HCMUS)
-Nhóm sinh viên thực hiện:
-Nguyễn Lê Chí Tường (25120465)
-Đoàn Hoàng Việt (25120469)
-Lê Dương Hồng Quân (25120424)
+Tên môn học: Cấu trúc dữ liệu và giải thuật  
+Thời gian: Học kỳ II, năm học 2025 - 2026  
+Đơn vị: Khoa Công nghệ Thông tin - Trường Đại học Khoa học Tự nhiên (HCMUS)  
+Nhóm sinh viên thực hiện:  
+Nguyễn Lê Chí Tường (25120465)  
+Đoàn Hoàng Việt (25120469)  
+Lê Dương Hồng Quân (25120424)  
 
 ## Benchmark 1
 Bài A: 
