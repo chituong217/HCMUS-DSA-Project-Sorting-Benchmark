@@ -35,13 +35,10 @@ Với mảng chuỗi, phép so sánh từng chữ cái là nơi dễ bị nghẽ
 ## Benchmark 2
 Bài A:
 * Thuật toán lựa chọn lần 2: Radix sort hệ số 256.
-* Phương pháp tối ưu: tối ưu đầu vào.
-* Lí do: khi dữ liệu đầu vào lớn, nó sẽ trở thành một cản trở về thời gian chạy. Đôi khi code chạy chậm không phải vì thuật toán chưa tối ưu nhưng vì kĩ thuật xử lí đầu vào còn nhiều lỗ hỏng.
-
+* Phương pháp tối ưu: giữ nguyên từ lần 1
 Bài B:
 * Thuật toán lựa chọn lần 2: Radix sort phần tử quan trọng nhất.
-* Phương pháp tối ưu: tối ưu đầu vào.
-* Lí do: khi dữ liệu đầu vào lớn, nó sẽ trở thành một cản trở về thời gian chạy. Đôi khi code chạy chậm không phải vì thuật toán chưa tối ưu nhưng vì kĩ thuật xử lí đầu vào còn nhiều lỗ hỏng.
+* Phương pháp tối ưu: giữ nguyên từ lần 1
 
 Bài C:
 Lần này em không sử dụng cấu trúc Bucket + Radix Sort và viết lại theo hướng tối ưu 3 yếu tố:
