@@ -39,7 +39,7 @@ Bài A:
 
 Bài B:
 * Thuật toán lựa chọn lần 2: Radix sort phần tử quan trọng nhất.
-* Phương pháp tối ưu: giữ nguyên từ lần 1\
+* Phương pháp tối ưu: giữ nguyên từ lần 1
 
 Bài C:
 Lần này em không sử dụng cấu trúc Bucket + Radix Sort và viết lại theo hướng tối ưu 3 yếu tố:
