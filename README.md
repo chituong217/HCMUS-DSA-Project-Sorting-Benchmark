@@ -30,7 +30,7 @@ Mục tiêu của bộ test này không phải là sinh dữ liệu ngẫu nhiê
 
 Với bài số nguyên, nhóm tạo một mảng xếp giảm dần để ép các cài đặt Quick Sort lặp đủ N tầng đệ quy, đẩy thời gian chạy lên tối đa. Nhóm cũng thiết kế một test chỉ đan xen đúng hai số 1 và 2 để làm rối loạn các hàm chia mảng partition. Bẫy hiểm nhất là test thứ 5, chỉ in ra số lớn nhất (2147483647) và nhỏ nhất (-2147483648) của kiểu int 32-bit. Rất nhiều người quen tay viết hàm so sánh bằng phép trừ a trừ b. Khi gặp test này, máy tính sẽ bị tràn bộ nhớ và cho ra kết quả sai hoàn toàn.
 
-Với mảng chuỗi, phép so sánh từng chữ cái là nơi dễ bị nghẽn nhất. Nhóm sinh ra các chuỗi dài 100 ký tự có 99 chữ cái đầu giống hệt nhau. Máy tính của các nhóm sẽ phải lặp qua 99 chữ cái đó vô ích chỉ để thấy sự khác biệt ở ký tự cuối cùng. Riêng ở bài C, nhóm lồng ghép một chuỗi ngắn làm tiền tố cho một chuỗi dài để ép thuật toán phải duyệt hết độ dài chuỗi ngắn mới phát hiện ra điểm khác biệt.
+Với mảng chuỗi, phép so sánh từng chữ cái là nơi dễ bị nghẽn nhất. Nhóm sinh ra các chuỗi dài 100 ký tự có 99 chữ cái đầu giống hệt nhau. Máy tính của các nhóm sẽ phải lặp qua 99 chữ cái đó vô ích chỉ để thấy sự khác biệt ở ký tự cuối cùng.
 
 ## Benchmark 2
 Bài A:
